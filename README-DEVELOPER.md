@@ -1,6 +1,6 @@
 # Perquisites
 
-The project uses [truffle suite](http://truffleframework.com/) and implicit nodeJS,
+The project uses [truffle suite](http://truffleframework.com/) and implicit NodeJS,
 if you are behind the proxy consider [this article](https://jjasonclark.com/how-to-setup-node-behind-web-proxy/).
 
 Truffle (and all the related tools) implies at least nodeJS 8.00.
@@ -25,7 +25,7 @@ This files are converted in javascript files during the `compile` step.
 * `test` unit tests for the contracts, this can be javascript and Solidity.
 The `javascript tests` are test where you interact with contracts over the `web3` client.
 The `Solidity tests` are the test where you interact with the contract directly.
-* `.soliumrc` and `soliumrc.json` files are configuration for the [Solium](https://github.com/duaraghav8/Solium). This is a lister and a formatter as well.
+* `.soliumrc` and `soliumrc.json` files are configuration for the [Solium](https://github.com/duaraghav8/Solium). This is a [linter](https://en.wikipedia.org/wiki/Lint_(software)) and a formatted as well.
 * `truffle.js` used to configure the truffle framework, for the moment it contains only the connection to the test chain named
 `development` (which runs on `localhost:8545`).
 
@@ -51,7 +51,9 @@ Tun all the unit test with the command: `truffle test`
 
 ## Travis Integration
 
-The actual project build pipeline compiles, deploys (on a local test chain) and tests all the contracts.
+The actual project uses [Travis-CI](https://travis-ci.org/) to compiles, deploys (on a local test chain) and tests all the contracts. Also the build chain cares about your coding style, if your new added code violate the style-guide you will be not able to deploy.
+
+For more information consider the [travis config](./.travis.yml) file.
 
 
 ## Coding Style-guide
@@ -69,9 +71,16 @@ Follow actions are available:
 
 # The contract explained
 
+The bidding logic is simple, more users are able to engage in a bidding action. Each user can bid his/her offer as many time he/she wants. Only the last bid is taken in consideration - this means the new bids will replace the old one, if any.
+The bidder with the greatest bid value winns.
+
+We deal with two kind of users, bidders and contract owner (only one of this kind).
+*Only the contract owner* is able to query for the winner. All the other users are only bidding.
+
+The user are identified after their [Blockchain address](https://blockgeeks.com/guides/blockchain-address-101/), if you want to add more users then you need to add new accounts to your chain.
 
 ## Events and their semantic
 
 Following events are available that far:
 
-1. NewMaxBid
+1. NewMaxBid - used to signal that a new bid value appears.
