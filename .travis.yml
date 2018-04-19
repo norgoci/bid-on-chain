@@ -10,8 +10,13 @@ before_script:
   - yarn --version
   - yarn global add truffle
   - yarn global add solium
-  - docker run --name bid_on_chain_ganache -p 8545:8545 trufflesuite/ganache-cli:latest
+  - docker run -d --name bid_on_chain_ganache -p 8545:8545 trufflesuite/ganache-cli:latest
   - node -v
+  - docker ps -a
+
+after_script:
+  - docker stop bid_on_chain_ganache
+  - docker rm bid_on_chain_ganache
   - docker ps -a
 
 script:
