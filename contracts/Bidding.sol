@@ -27,8 +27,8 @@ contract Bidding {
 
     // can only be called by the admin of the contract
     modifier onlyOwnerAllowed() {
-      require(msg.sender == owner);
-      _;
+        require(msg.sender == owner);
+        _;
     }
 
     // This is the constructor whose code is
