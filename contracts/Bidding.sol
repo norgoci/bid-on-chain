@@ -71,21 +71,6 @@ contract Bidding {
         return msg.sender == bestBidder;
     }
 
-    function addAdmin(uint bidValue, uint bidDate) public payable
-    returns(bool success)
-    {
-        bestBidder = msg.sender;
-        bidds[msg.sender] = Bid(bidValue, bidDate);
-        return true;
-    }
-
-    function isAdmin(address query) public
-    view
-    returns(uint queryResult)
-    {
-        return bidds[query].val;
-    }
-
     // Used  to indicate that a bid with greatest value so far was done
     // The event caries the address from the invoved user and the bidding infromatins.
     event NewMaxBid(address bidderAddress, uint value, uint date);
